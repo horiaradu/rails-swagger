@@ -1,11 +1,28 @@
 class BeersController < ApplicationController
-  skip_before_action :authenticate_user!, only: :laggers
-
-  def laggers
-    render json: { laggers: 'true' }
+  def index
+    @beers = Beer.all
   end
 
-  def ipas
-    render json: { ipas: 'true' }
+  def show
+    @beer = Beer.find(params[:id])
+  end
+
+  def create
+    @beer = Beer.new
+    @beer.update(beer_params)
+
+    render :show, status: :created
+  end
+
+  def destroy
+    @beer = Beer.find(params[:id])
+    @beer.destroy
+    head :ok
+  end
+
+  private
+
+  def beer_params
+    params.require(:beer).permit(:name, :beer_type)
   end
 end
