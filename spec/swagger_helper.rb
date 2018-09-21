@@ -19,6 +19,16 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
+      securityDefinitions: {
+        Bearer: {
+          type: 'apiKey',
+          name: 'Authorization',
+          in: 'header'
+        }
+      },
+      security: [
+        { Bearer: [] }
+      ],
       definitions: {
         error_response: {
           type: :object,
@@ -48,6 +58,30 @@ RSpec.configure do |config|
             beers: { type: :array, items: { '$ref': '#/definitions/beer' } }
           },
           required: %w[beers]
+        },
+        sign_in_payload: {
+          type: :object,
+          properties: {
+            user: {
+              type: :object,
+              properties: {
+                email: { type: :string },
+                password: { type: :string }
+              },
+              required: %w[email password]
+            }
+          },
+          required: %w[user]
+        },
+        sign_in_response: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            email: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[id email created_at updated_at]
         }
       },
       paths: {}

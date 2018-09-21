@@ -4,6 +4,20 @@
     "title": "API V1",
     "version": "v1"
   },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "Bearer": [
+
+      ]
+    }
+  ],
   "definitions": {
     "error_response": {
       "type": "object",
@@ -56,6 +70,52 @@
       "required": [
         "beers"
       ]
+    },
+    "sign_in_payload": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "email",
+            "password"
+          ]
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "sign_in_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "created_at",
+        "updated_at"
+      ]
     }
   },
   "paths": {
@@ -77,6 +137,46 @@
           },
           "401": {
             "description": "when unauthenticated",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/users/sign_in": {
+      "post": {
+        "summary": "sign in",
+        "tags": [
+          "sessions"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+
+        ],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/sign_in_payload"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "when credentials are valid",
+            "schema": {
+              "$ref": "#/definitions/sign_in_response"
+            }
+          },
+          "401": {
+            "description": "when credentials are invalid",
             "schema": {
               "$ref": "#/definitions/error_response"
             }

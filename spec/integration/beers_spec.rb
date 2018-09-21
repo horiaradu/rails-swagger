@@ -14,7 +14,8 @@ describe 'beers' do
       response 200, 'when authenticated' do
         schema '$ref' => '#/definitions/beers_response'
 
-        before { login_as(user) }
+        let(:token) { Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first }
+        let('Authorization') { "Bearer #{token}" }
 
         before { |example| submit_request(example.metadata) }
 
@@ -25,6 +26,8 @@ describe 'beers' do
 
       response 401, 'when unauthenticated' do
         schema '$ref' => '#/definitions/error_response'
+
+        let('Authorization') { '' }
 
         before { |example| submit_request(example.metadata) }
 
