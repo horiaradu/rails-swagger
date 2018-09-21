@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :beer do
-    name "MyString"
-    type ""
+    name 'bereta'
+    beer_type 'ipa'
   end
 end

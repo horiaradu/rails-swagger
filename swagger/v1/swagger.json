@@ -1,0 +1,88 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "definitions": {
+    "error_response": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "beer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "beer_type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "beer_type"
+      ]
+    },
+    "beer_response": {
+      "type": "object",
+      "properties": {
+        "beer": {
+          "$ref": "#/definitions/beer"
+        }
+      },
+      "required": [
+        "beer"
+      ]
+    },
+    "beers_response": {
+      "type": "object",
+      "properties": {
+        "beers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/beer"
+          }
+        }
+      },
+      "required": [
+        "beers"
+      ]
+    }
+  },
+  "paths": {
+    "/beers": {
+      "get": {
+        "summary": "returns the beers",
+        "tags": [
+          "beers"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "when authenticated",
+            "schema": {
+              "$ref": "#/definitions/beers_response"
+            }
+          },
+          "401": {
+            "description": "when unauthenticated",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    }
+  }
+}
