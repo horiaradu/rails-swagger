@@ -14,6 +14,13 @@ class BeersController < ApplicationController
     render :show, status: :created
   end
 
+  def update
+    @beer = Beer.find(params[:id])
+    @beer.update(beer_params)
+
+    render :show, status: :ok
+  end
+
   def destroy
     @beer = Beer.find(params[:id])
     @beer.destroy
