@@ -14,7 +14,7 @@ describe 'sessions' do
 
       parameter name: :data, in: :body, schema: { '$ref' => '#/definitions/sign_in_payload' }
 
-      response 201, 'when credentials are valid' do
+      response 200, 'when credentials are valid' do
         let(:data) do
           { user: { email: user.email, password: user.password } }
         end

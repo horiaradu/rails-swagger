@@ -97,24 +97,28 @@
     "sign_in_response": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "integer"
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "email"
+          ]
         },
-        "email": {
-          "type": "string"
-        },
-        "created_at": {
-          "type": "string"
-        },
-        "updated_at": {
+        "token": {
           "type": "string"
         }
       },
       "required": [
-        "id",
-        "email",
-        "created_at",
-        "updated_at"
+        "user",
+        "token"
       ]
     }
   },
@@ -327,7 +331,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "when credentials are valid",
             "schema": {
               "$ref": "#/definitions/sign_in_response"

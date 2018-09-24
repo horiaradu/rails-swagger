@@ -76,12 +76,17 @@ RSpec.configure do |config|
         sign_in_response: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            email: { type: :string },
-            created_at: { type: :string },
-            updated_at: { type: :string }
+            user: {
+              type: :object,
+              properties: {
+                id: { type: :integer },
+                email: { type: :string }
+              },
+              required: %w[id email]
+            },
+            token: { type: :string }
           },
-          required: %w[id email created_at updated_at]
+          required: %w[user token]
         }
       },
       paths: {}
